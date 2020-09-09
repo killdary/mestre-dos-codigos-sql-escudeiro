@@ -35,9 +35,48 @@
         ```
 
 4. Criar uma query hierarquica, ordenando os registros por uma coluna específica;
+    - Resposta:
+        ```
+        Drop table dbo.usuario;
 
+        CREATE TABLE dbo.usuario (
+                id INTEGER IDENTITY PRIMARY KEY,
+                parent_id INTEGER NULL REFERENCES dbo.usuario(id),
+                nome VARCHAR(50)
+            );
+            
+        INSERT INTO dbo.usuario (parent_id, nome) VALUES (NULL, 'Ilson');
+        INSERT INTO dbo.usuario (parent_id, nome) VALUES (1, 'Desiree');
+        INSERT INTO dbo.usuario (parent_id, nome) VALUES (2, 'Filipe Bezerra');
+        INSERT INTO dbo.usuario (parent_id, nome) VALUES (3, 'Guilherme Lofrano');
+        INSERT INTO dbo.usuario (parent_id, nome) VALUES (3, 'Taciana Claudia');
+        INSERT INTO dbo.usuario (parent_id, nome) VALUES (1, 'Marco Aurélio');
+        INSERT INTO dbo.usuario (parent_id, nome) VALUES (6, 'Carlos Barbosa');
+        INSERT INTO dbo.usuario (parent_id, nome) VALUES (6, 'Killdary Aguiar');
+        INSERT INTO dbo.usuario (parent_id, nome) VALUES (6, 'Pricila Santana');
+        INSERT INTO dbo.usuario (parent_id, nome) VALUES (1, 'Luis Feitosa');
+        INSERT INTO dbo.usuario (parent_id, nome) VALUES (9, 'Renisson Sousa');
+        INSERT INTO dbo.usuario (parent_id, nome) VALUES (9, 'Daphine');
+
+        WITH hierarquia (id, parent_id, nome) AS (
+                    SELECT id, parent_id, nome
+                    FROM dbo.usuario
+                    WHERE parent_id IS NULL
+        UNION ALL
+
+        SELECT child.id, child.parent_id, child.nome
+        FROM dbo.usuario child
+        JOIN hierarquia ON hierarquia.id = child.parent_id
+        )
+        SELECT usu.nome AS parent, hier.nome AS child
+        FROM hierarquia hier
+        LEFT JOIN dbo.usuario usu ON usu.id = hier.parent_id
+        ORDER BY usu.id;  
+        ```
+        
 5. Realize 5 consultas no modelo de dados criado no item 1, realizando pelo menos uma das seguintes operações: Union, Intersect, Minus, e utilizando pelo menos 3 tipos diferentes de joins;
-   
+    - Resposta:
+      - questao5.sql
 
 6. O que são os comandos DML?
    - Opção 1;
