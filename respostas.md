@@ -130,14 +130,14 @@
 
 
 13. Utilizamos a função "GROUP BY" para agrupar informações iguais de determidas colunas. Com base nos seus conhecimento a respeito da função "GROUP BY" assinale o código correto:
-    - Opção 3
+    - Opção 1
     ```
         SELECT c.nome, sum(v.total_venda)
-            FROM cliente
+            FROM cliente c
         INNER JOIN vendas v on v.id_cliente = c.id
             WHERE v.dt_venda > '01/01/2019'
         GROUP BY c.nome
-        ORDER BY nome
+        ORDER BY 1
     ```
 
 14. Muitas vezes queremos buscar um registro no banco de dados mas não sabemos o termo completo que queremos consultar. Ex: Você foi instruído para consultar o nome de todos clientes que possuem o nome "Souza" no nome. Para isso você recebeu o comando abaixo incorreto. Análise a consulta e reescreva a da maneira correta.
